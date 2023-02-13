@@ -8,7 +8,8 @@ export class PostController {
 
   public getPosts = async (req: Request, res: Response) => {
     try {
-      const output = await this.postBusiness.getPosts()
+      const q = req.query.q as string | undefined
+      const output = await this.postBusiness.getPosts(q)
 
       res.status(200).send(output)
 
