@@ -1,6 +1,6 @@
 import { PostDB } from "../types";
 import { BaseDatabase } from "./BaseDatabase";
-import { UsersDatabase } from "./UserDatabase";
+import { UserDatabase } from "./UserDatabase";
 
 export class PostDatabase extends BaseDatabase {
   public static TABLE_POSTS = "posts"
@@ -12,18 +12,25 @@ export class PostDatabase extends BaseDatabase {
     return postsDB
   }
 
-  public getPostsAndCreators = async (q: string | undefined) => {
+  public getPostsAndUsers = async (q: string | undefined) => {
     let postsDB : PostDB[]
 
     postsDB = await this.getAllPosts()
 
-    const usersDB = await BaseDatabase.connection(UsersDatabase.TABLE_USERS)
-    .select()
+    const usersDB = await BaseDatabase
+      .connection(UserDatabase.TABLE_USERS)
+      .select()
 
     return {
       postsDB,
       usersDB
     }
+  }
+
+  public createPost = async (post: PostDB): Promise<void> => {
+    await BaseDatabase
+      .connection(PostDatabase.TABLE_POSTS)
+      .insert(post)
   }
 
 }
