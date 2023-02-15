@@ -1,3 +1,4 @@
+import { UserDB } from "../types"
 import { BaseDatabase } from "./BaseDatabase"
 
 export class UserDatabase extends BaseDatabase {
@@ -9,5 +10,11 @@ export class UserDatabase extends BaseDatabase {
       .select()
     return usersDB
   }
+
+  public async insertUser(newUserDB: UserDB) {
+    await BaseDatabase
+        .connection(UserDatabase.TABLE_USERS)
+        .insert(newUserDB)
+}
 
 }
