@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { PostBusiness } from "../business/PostBusiness";
-import { CreatePostInput } from "../dtos/postDTO";
+import { CreatePostInput, GetPostsInput } from "../dtos/postDTO";
 import { BaseError } from "../errors/BaseError";
 
 export class PostController {
@@ -10,8 +10,12 @@ export class PostController {
 
   public getPosts = async (req: Request, res: Response) => {
     try {
-      const q = req.query.q as string | undefined
-      const output = await this.postBusiness.getPosts(q)
+      const input: GetPostsInput = {
+        q: req.query.q as string | undefined,
+        token: req.headers.authorization
+      }
+      
+      const output = await this.postBusiness.getPosts(input)
 
       res.status(200).send(output)
 
