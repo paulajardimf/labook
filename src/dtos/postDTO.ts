@@ -11,3 +11,10 @@ export interface GetPostsInput {
   q: unknown,
   token: string | undefined
 }
+
+export interface EditPostInput {
+  idToEdit: string,
+  content: string,
+  token: string | undefined
+}
+
