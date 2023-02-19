@@ -82,10 +82,6 @@ export class UserBusiness {
 
     const isPasswordCorrect = await this.hashManager.compare(password, userDB.password)
 
-    // if (password !== userDB.password) {
-    //     throw new BadRequestError("'email' ou 'password' incorretos")
-    // }
-
     if (!isPasswordCorrect) {
         throw new BadRequestError("Email ou senha incorretos!")
     }
@@ -113,5 +109,5 @@ export class UserBusiness {
     }
 
     return output
-}
+  }
 }
