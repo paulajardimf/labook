@@ -1,6 +1,6 @@
 import { PostDatabase } from "../database/PostDatabase";
 import { Post } from "../models/Post";
-import { CreatePostInput, CreatePostOutput, EditPostInput, GetPostsInput } from "../dtos/postDTO";
+import { CreatePostInput, CreatePostOutput, DeletePostInput, EditPostInput, GetPostsInput } from "../dtos/postDTO";
 import { BadRequestError } from "../errors/BadRequestError";
 import { IdGenerator } from "../services/IdGenerator";
 import { HashManager } from "../services/HashManager";
@@ -156,6 +156,35 @@ export class PostBusiness {
     const updatedPost = post.toDBModel()
 
     await this.postDatabase.update(idToEdit, updatedPost)
+
+  }
+
+  public deletePost = async (
+    input : DeletePostInput
+  ): Promise<void> => {
+    const { idToDelete, token } = input
+
+    if (token === undefined) {
+      throw new BadRequestError("Token ausente!")
+    }
+
+    const payload = this.tokenManager.getPayload(token as string)
+
+    if (payload === null) {
+      throw new BadRequestError("Usuário não logado!")
+    }
+
+    const postDB : PostDB | undefined = await this.postDatabase.findById(idToDelete)
+
+    if (!postDB) {
+      throw new NotFoundError("'id' não encontrado")
+    }
+
+    if (payload.role !== USER_ROLES.ADMIN && postDB.creator_id !== payload.id) {
+      throw new BadRequestError("Somente o criador do post pode deletar.")
+    }
+
+    await this.postDatabase.deleteById(idToDelete)
 
   }
 }
