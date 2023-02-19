@@ -18,3 +18,8 @@ export interface EditPostInput {
   token: string | undefined
 }
 
+export interface DeletePostInput {
+  idToDelete: string,
+  token: string | undefined
+}
+
