@@ -41,10 +41,10 @@ CREATE TABLE likes_dislikes (
 );
 
 INSERT INTO users (id, name, email, password, role) VALUES
-  ("u001", "Paula", "paula@gmail.com", "123", "admin"),
-  ("u002", "Bárbara", "barbara@gmail.com", "456", "author"),
-  ("u003", "Aline", "aline@gmail.com", "789", "author"),
-  ("u004", "Lana", "lana@gmail.com", "321", "author");
+  ("u001", "Paula", "paula@gmail.com", "$2a$12$CIHI6habJCFvlzVeoKpZq.k2DVqfaBYVewqlDgHcLPUROCkaRkPcq", "admin"),
+  ("u002", "Bárbara", "barbara@gmail.com", "$2a$12$b9DI5pp1GFlF48IqGJylu.NtQjftS0oqEId5n.xGxh/wCSsBTlVmS", "author"),
+  ("u003", "Aline", "aline@gmail.com", "$2a$12$.R4cGV1ZAEH8DcR2/3brA.N2rJ4QRNyRQYqe3IKP.fgZpsD9lp4v2", "author"),
+  ("u004", "Lana", "lana@gmail.com", "$2a$12$DWV0r/1LTaCn3EiOfcRq2O.BQAHTkdusEKmTk9qO5/oudsmWDNzTe", "author");
 
 INSERT INTO posts (id, creator_id, content) VALUES
   ("p001", "u002", "Oie!"),
@@ -52,10 +52,10 @@ INSERT INTO posts (id, creator_id, content) VALUES
   ("p003", "u004", "Au auuu!!!");
 
 INSERT INTO likes_dislikes (user_id, post_id, like) VALUES 
-  ("u002", "p002", 1),
-  ("u003", "p001", 1),
-  ("u002", "p003", 1),
-  ("u003", "p003", 1);
+  ("u002", "p002", 0),
+  ("u003", "p001", 0),
+  ("u002", "p003", 0),
+  ("u003", "p003", 0);
 
 SELECT * FROM users;
 
